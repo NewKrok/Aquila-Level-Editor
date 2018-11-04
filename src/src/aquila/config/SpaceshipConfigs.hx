@@ -12,7 +12,7 @@ class SpaceshipConfigs
 
 	public static function init()
 	{
-		config = [{"id":"1535737624855", "name":"Player", "isBoss":false, "tile":"img/gamecontent/spaceship/spaceship_a.png", "destroyRange":0, "hitAreaRadius":30, "maxLife":1, "speed":10, "fireRate":1000, "missileFireRate":1000, "chanceToDodge":0, "bulletConfig":{"firePoints":[{"x":0, "y":0}], "tile":"img/gamecontent/bullet/bullet_a.png", "speed":4, "damage":10, "maxLife":0}, "missileConfig":{"firePoints":[{"x":0, "y":0}], "tile":"img/gamecontent/missle/missle_a.png", "speed":10, "rotationSpeed":0, "maxDamage":0, "reducedDamage":0, "areaToReducedDamage":0, "maxLife":0}}, {"id":"1535737625655", "name":"Enemy1", "isBoss":false, "tile":"img/gamecontent/spaceship/enemy_a.png", "destroyRange":0, "hitAreaRadius":30, "maxLife":1, "speed":10, "fireRate":1000, "missileFireRate":1000, "chanceToDodge":0, "bulletConfig":{"firePoints":[{"x":0, "y":0}], "tile":"img/gamecontent/bullet/bullet_b.png", "speed":2, "damage":10, "maxLife":1}, "missileConfig":{"firePoints":[{"x":0, "y":0}], "tile":"img/gamecontent/missle/missle_a.png", "speed":10, "rotationSpeed":0, "maxDamage":0, "reducedDamage":0, "areaToReducedDamage":0, "maxLife":0}}];
+		config = [{"decorations":[{"id":"fire_a","point":{"x":-24,"y":35}},{"id":"fire_a","point":{"x":-9,"y":34}}],"id":"1535737624855","name":"Player","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":5,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":-15}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":400,"damage":10,"maxLife":0},"missileConfig":{"firePoints":[{"x":30,"y":0},{"x":-30,"y":-3}],"tile":"img/gamecontent/missle/missle_a.png","speed":100,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"decorations":[],"id":"1535737625655","name":"Enemy1","isBoss":false,"tile":"img/gamecontent/spaceship/enemy_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_b.png","speed":2,"damage":10,"maxLife":1},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"id":"1541371592350","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]},{"id":"1541371592985","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]}];
 	}
 
 	public static function getSpaceshipConfig(id:String):SpaceshipConfig
@@ -58,7 +58,8 @@ class SpaceshipConfigs
 				reducedDamage: 0,
 				areaToReducedDamage: 0,
 				maxLife: 0,
-			}
+			},
+			decorations: []
 		};
 	}
 
@@ -92,7 +93,8 @@ class SpaceshipConfigs
 				reducedDamage: target.missileConfig.reducedDamage,
 				areaToReducedDamage: target.missileConfig.areaToReducedDamage,
 				maxLife: target.missileConfig.maxLife
-			}
+			},
+			decorations: []
 		};
 
 		for (p in target.bulletConfig.firePoints) o.bulletConfig.firePoints.push({ x: p.x, y: p.y });
@@ -116,7 +118,13 @@ typedef SpaceshipConfig = {
 	var fireRate:Float;
 	var bulletConfig:BulletConfig;
 	var missileConfig:MissileConfig;
+	var decorations:Array<DecorationData>;
 	@:optional var fireModeConfig:FireModeConfig;
+}
+
+typedef DecorationData = {
+	var id:String;
+	var point:SimplePoint;
 }
 
 typedef FireModeConfig = {

@@ -1,5 +1,7 @@
 package aquila.enemyeditor;
 
+import aquila.config.DecorationConfigs;
+import aquila.config.SpaceshipConfigs.DecorationData;
 import com.greensock.TweenMax;
 import com.greensock.easing.Linear;
 import aquila.ui.NumberProperty;
@@ -35,9 +37,12 @@ class SpaceshipPreview extends Sprite
 	var fireMissileInfos:Array<FireBulletInfo>;
 	var fireMissileMarkerContainer:Sprite;
 
+	var bindedDecoration:Array<DecorationData> = [];
+	var decorationDatas:Map<SpaceshipDecoration, DecorationData> = new Map<SpaceshipDecoration, DecorationData>();
 	var decorations:Array<SpaceshipDecoration> = [];
 	var decorContainer:Sprite;
 	var decorationLibrary:DecorationLibrary;
+	var activeDecor:SpaceshipDecoration;
 
 	var previewContainer:Sprite;
 	var moveDirection:Int = 1;
@@ -112,11 +117,12 @@ class SpaceshipPreview extends Sprite
 		previewContainer.addChild(fireMissileMarkerContainer = new Sprite());
 		fireMissileMarkerContainer.visible = false;
 
-		addChild(decorationLibrary = new DecorationLibrary(addDecoration));
+		addChild(decorationLibrary = new DecorationLibrary(function(c) { addDecoration(c, null); }));
 		decorationLibrary.x = width - decorationLibrary.width - 5;
 		decorationLibrary.y = 5;
 		previewContainer.addChild(decorContainer = new Sprite());
 
+		addEventListener(Event.ADDED_TO_STAGE, init);
 		addEventListener(Event.ENTER_FRAME, update);
 		addEventListener(MouseEvent.MOUSE_OVER, mOver);
 		addEventListener(MouseEvent.MOUSE_OUT, mOut);
@@ -125,12 +131,35 @@ class SpaceshipPreview extends Sprite
 		move(10);
 	}
 
-	function addDecoration(config)
+	private function init(e):Void
 	{
+		removeEventListener(Event.ADDED_TO_STAGE, init);
+
+		stage.addEventListener(MouseEvent.MOUSE_UP, mUp);
+		stage.addEventListener(MouseEvent.MOUSE_MOVE, mMove);
+	}
+
+	function addDecoration(config, point:SimplePoint = null)
+	{
+		point = point == null ? {x: 0, y: 0} : point;
+
 		var decor = new SpaceshipDecoration(config);
+		decor.addEventListener(MouseEvent.MOUSE_DOWN, mDownDecor);
+		decor.x = point.x;
+		decor.y = point.y;
+
 		decorations.push(decor);
+		decorationDatas.set(decor, {id: config.id, point: point});
 
 		decorContainer.addChild(decor);
+
+		for (d in decorations) d.reset();
+	}
+
+	function updateBindedDecors()
+	{
+		for (i in 0...bindedDecoration.length) bindedDecoration.pop();
+		for (d in decorationDatas) bindedDecoration.push(d);
 	}
 
 	function mOut(e:MouseEvent):Void
@@ -271,6 +300,7 @@ class SpaceshipPreview extends Sprite
 		bulletSpeed = config.bulletConfig.speed;
 		firePoints = config.bulletConfig.firePoints;
 		fireMissileRate = config.missileFireRate;
+		bindedDecoration = config.decorations;
 		missileTile = { editorUrl: config.missileConfig.tile, gameUrl: "" };
 		missileSpeed = config.missileConfig.speed;
 		fireMissilePoints = config.missileConfig.firePoints;
@@ -280,6 +310,19 @@ class SpaceshipPreview extends Sprite
 
 		createFireMissilePoints();
 		createAddMissileArea();
+
+		for (i in 0...decorations.length)
+		{
+			var d = decorations[0];
+			decorationDatas.remove(d);
+			decorContainer.removeChild(d);
+			decorations.remove(d);
+		}
+		for (i in 0...bindedDecoration.length)
+		{
+			var d = bindedDecoration[i];
+			addDecoration(DecorationConfigs.getConfig(d.id), d.point);
+		}
 	}
 
 	function createFirePoints()
@@ -355,6 +398,18 @@ class SpaceshipPreview extends Sprite
 			activeMissileMarker.x = Math.round(fireMissileMarkerContainer.mouseX / gridSizeProp.value) * gridSizeProp.value;
 			activeMissileMarker.y = Math.round(fireMissileMarkerContainer.mouseY / gridSizeProp.value) * gridSizeProp.value;
 		}
+
+		if (activeDecor != null)
+		{
+			activeDecor.x = Math.round((decorContainer.mouseX - activeDecor.width / 2) / gridSizeProp.value) * gridSizeProp.value;
+			activeDecor.y = Math.round((decorContainer.mouseY - activeDecor.height / 2) / gridSizeProp.value) * gridSizeProp.value;
+
+			var data = decorationDatas.get(activeDecor);
+			data.point.x = activeDecor.x;
+			data.point.y = activeDecor.y;
+
+			updateBindedDecors();
+		}
 	}
 
 	private function mUp(e:MouseEvent):Void
@@ -409,6 +464,32 @@ class SpaceshipPreview extends Sprite
 			}
 			activeMissileMarker = null;
 		}
+		else if (activeDecor != null)
+		{
+			if (removeElementArea.hitTestObject(activeDecor))
+			{
+				for (decor in decorations)
+				{
+					if (activeDecor == decor)
+					{
+						decorationDatas.remove(activeDecor);
+						decorations.remove(activeDecor);
+						decorContainer.removeChild(activeDecor);
+						updateBindedDecors();
+					}
+				}
+
+				activeDecor = null;
+				return;
+			}
+
+			activeDecor = null;
+		}
+	}
+
+	private function mDownDecor(e:MouseEvent):Void
+	{
+		activeDecor = cast e.currentTarget;
 	}
 
 	private function mDownBullet(e:MouseEvent):Void

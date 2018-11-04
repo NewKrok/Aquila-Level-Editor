@@ -47,4 +47,5 @@ class DecorationLibrary extends Sprite
 	}
 
 	function onEnterFrame(e:Event) for (d in decors) d.update();
+	public function reset() for (d in decors) d.reset();
 }

@@ -37,6 +37,13 @@ class DecorationConfigs
 			}
 		];
 	}
+
+	public static function getConfig(id:String)
+	{
+		for (c in config) if (c.id == id) return c;
+
+		return null;
+	}
 }
 
 typedef DecorationConfig = {

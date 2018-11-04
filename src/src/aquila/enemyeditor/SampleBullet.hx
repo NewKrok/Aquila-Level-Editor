@@ -37,8 +37,8 @@ class SampleBullet extends Sprite
 
 	public function update(delta:Float, speedMultiplier:Float)
 	{
-		x += xSpeed * delta * speedMultiplier;
-		y += ySpeed * delta * speedMultiplier;
+		x += xSpeed * (delta / 100) * speedMultiplier;
+		y += ySpeed * (delta / 100) * speedMultiplier;
 
 		if (x < 0 || x > 400 || y < 0 || y > 600)
 			onRemove(this);
