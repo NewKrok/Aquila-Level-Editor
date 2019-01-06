@@ -1,7 +1,8 @@
 package aquila.enemyeditor;
 
+import aquila.config.AnimationConfig.AnimationConfigs;
 import aquila.config.TileConfigs;
-import openfl.Assets;
+import aquila.ui.Animation;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 
@@ -11,11 +12,11 @@ import openfl.display.Sprite;
  */
 class FirePointMarker extends Sprite
 {
-	public function new(tile:String)
+	public function new(graphicId:String)
 	{
 		super();
 
-		var preview:Bitmap = new Bitmap(Assets.getBitmapData(tile));
+		var preview:Animation = new Animation(AnimationConfigs.getConfig(graphicId));
 		preview.scaleX = preview.scaleY = aquila.config.TileConfigs.TILE_SCALE;
 		preview.x = -preview.width / 2;
 		preview.y = -preview.height / 2;

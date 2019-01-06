@@ -1,14 +1,10 @@
 package aquila.enemyeditor;
-import aquila.config.DecorationConfigs;
 
+import aquila.config.AnimationConfig.AnimationConfigs;
 import aquila.config.DecorationConfigs.DecorationConfig;
-import openfl.Assets;
+import aquila.ui.Animation;
 import openfl.Lib;
 import openfl.display.Sprite;
-import spritesheet.AnimatedSprite;
-import spritesheet.Spritesheet;
-import spritesheet.data.BehaviorData;
-import spritesheet.importers.BitmapImporter;
 
 /**
  * ...
@@ -17,7 +13,7 @@ import spritesheet.importers.BitmapImporter;
 class SpaceshipDecoration extends Sprite
 {
 	var lastTime:Float = Lib.getTimer();
-	var animation:AnimatedSprite;
+	var animation:Animation;
 	var config:DecorationConfig;
 
 	public function new(config:DecorationConfig)
@@ -28,32 +24,24 @@ class SpaceshipDecoration extends Sprite
 		addChild(createNewDecor());
 	}
 
-	function createNewDecor():AnimatedSprite
+	function createNewDecor():Animation
 	{
-		var spritesheet:Spritesheet = BitmapImporter.create(Assets.getBitmapData(config.tile), config.cols, config.rows, config.width, config.height);
-		spritesheet.addBehavior(new BehaviorData("idle", config.frames, true, config.fps));
-		animation = new AnimatedSprite(spritesheet, true);
-		animation.showBehavior("idle");
+		animation = switch(config.type)
+		{
+			case ANIMATION: new Animation(AnimationConfigs.getConfig(config.id));
+		}
 
 		graphics.clear();
 		graphics.beginFill(0xFFFFFF, 0);
-		graphics.drawCircle(config.width / 2, config.width / 2, config.width / 2);
+		graphics.drawCircle(animation.width / 2, animation.width / 2, animation.width / 2);
 		graphics.endFill();
 
 		return animation;
-	}
-
-	public function update():Void
-	{
-		var delta = Lib.getTimer() - lastTime;
-		animation.update(cast delta);
-		lastTime = Lib.getTimer();
 	}
 
 	public function reset():Void
 	{
 		// Forked spritesheet to be able set timeElapsed = 0;
 		animation.reset();
-		lastTime = Lib.getTimer();
 	}
 }

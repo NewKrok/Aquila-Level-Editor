@@ -189,6 +189,7 @@ class SpaceshipPreview extends Sprite
 			addChild(addBulletArea = new TilePreview(null, bulletTile, { x: 35, y: 35 }));
 			addBulletArea.buttonMode = true;
 			addBulletArea.addEventListener(MouseEvent.CLICK, addFireBulletPoint);
+			addBulletArea.rotation = -90;
 			addBulletArea.x = width - addBulletArea.width - 5;
 			addBulletArea.y = previewPropHolder.y - addBulletArea.height - 5;
 		}
@@ -213,6 +214,7 @@ class SpaceshipPreview extends Sprite
 			addChild(addMissileArea = new TilePreview(null, missileTile, { x: 35, y: 35 }));
 			addMissileArea.buttonMode = true;
 			addMissileArea.addEventListener(MouseEvent.CLICK, addFireMissilePoint);
+			addMissileArea.rotation = -90;
 			addMissileArea.x = addBulletArea.x - addMissileArea.width - 5;
 			addMissileArea.y = previewPropHolder.y - addMissileArea.height - 5;
 		}
@@ -230,13 +232,20 @@ class SpaceshipPreview extends Sprite
 		var d:Float = (now - lastTime) / 10;
 		lastTime = now;
 
-		for (bullet in bullets) bullet.update(d, speedMultiplierProp.value);
+		var index = 0;
+		for (i in 0...bullets.length)
+		{
+			var bullet = bullets[index];
+			bullet.update(d, speedMultiplierProp.value);
+			if (bullets.indexOf(bullet) == -1) index--;
+			index++;
+		}
 
 		if (fireRate != 0 && now - lastFireTime > fireRate / speedMultiplierProp.value)
 		{
 			for (point in firePoints)
 			{
-				var bullet = new SampleBullet(bulletTile.editorUrl, bulletSpeed, -Math.PI / 2, speedMultiplierProp.value, onBulletRemove);
+				var bullet = new SampleBullet(bulletTile.gameUrl, bulletSpeed, -Math.PI / 2, speedMultiplierProp.value, onBulletRemove);
 				bullet.x = previewContainer.x + point.x;
 				bullet.y = previewContainer.y + point.y;
 				addChildAt(bullet, 0);
@@ -245,8 +254,6 @@ class SpaceshipPreview extends Sprite
 
 			lastFireTime = now;
 		}
-
-		for (decor in decorations) decor.update();
 	}
 
 	function onBulletRemove(b:SampleBullet)
@@ -296,12 +303,12 @@ class SpaceshipPreview extends Sprite
 
 		move(speed = config.speed);
 		fireRate = config.fireRate;
-		bulletTile = { editorUrl: config.bulletConfig.tile, gameUrl: "" };
+		bulletTile = { editorUrl: TileConfigs.getEditorUrlByGameUrl(config.bulletConfig.graphicId), gameUrl: config.bulletConfig.graphicId };
 		bulletSpeed = config.bulletConfig.speed;
 		firePoints = config.bulletConfig.firePoints;
 		fireMissileRate = config.missileFireRate;
 		bindedDecoration = config.decorations;
-		missileTile = { editorUrl: config.missileConfig.tile, gameUrl: "" };
+		missileTile = { editorUrl: TileConfigs.getEditorUrlByGameUrl(config.missileConfig.graphicId), gameUrl: config.missileConfig.graphicId };
 		missileSpeed = config.missileConfig.speed;
 		fireMissilePoints = config.missileConfig.firePoints;
 
@@ -342,9 +349,10 @@ class SpaceshipPreview extends Sprite
 		{
 			for (point in firePoints)
 			{
-				var marker:FirePointMarker = new FirePointMarker(bulletTile.editorUrl);
+				var marker:FirePointMarker = new FirePointMarker(bulletTile.gameUrl);
 				marker.x = point.x;
 				marker.y = point.y;
+				marker.rotation = -90;
 				fireBulletMarkerContainer.addChild(marker);
 				firePointMarkers.push(marker);
 				fireBulletInfos.push({ marker: marker, pointReference: point });
@@ -372,9 +380,10 @@ class SpaceshipPreview extends Sprite
 		{
 			for (point in fireMissilePoints)
 			{
-				var marker:FirePointMarker = new FirePointMarker(missileTile.editorUrl);
+				var marker:FirePointMarker = new FirePointMarker(missileTile.gameUrl);
 				marker.x = point.x;
 				marker.y = point.y;
+				marker.rotation = -90;
 				fireMissileMarkerContainer.addChild(marker);
 				fireMissilePointMarkers.push(marker);
 				fireMissileInfos.push({ marker: marker, pointReference: point });

@@ -1,6 +1,7 @@
 package aquila;
 
 import aquila.EditorMenu;
+import aquila.config.AnimationConfig.AnimationConfigs;
 import aquila.config.AttackLineConfig;
 import aquila.config.DecorationConfigs;
 import aquila.config.SpaceshipConfigs;
@@ -25,10 +26,11 @@ class Main extends Sprite
 		stage.scaleMode = StageScaleMode.SHOW_ALL;
 		stage.color = 0x222222;
 
-		aquila.config.DecorationConfigs.init();
-		aquila.config.TileConfigs.init();
-		aquila.config.SpaceshipConfigs.init();
-		aquila.config.AttackLineConfig.init();
+		AnimationConfigs.init();
+		DecorationConfigs.init();
+		TileConfigs.init();
+		SpaceshipConfigs.init();
+		AttackLineConfig.init();
 
 		var mainBox:HUIBox = new HUIBox(0, VAlign.TOP);
 

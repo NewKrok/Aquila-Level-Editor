@@ -12,7 +12,7 @@ class SpaceshipConfigs
 
 	public static function init()
 	{
-		config = [{"decorations":[{"id":"fire_a","point":{"x":-24,"y":35}},{"id":"fire_a","point":{"x":-9,"y":34}}],"id":"1535737624855","name":"Player","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":5,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":-15}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":400,"damage":10,"maxLife":0},"missileConfig":{"firePoints":[{"x":30,"y":0},{"x":-30,"y":-3}],"tile":"img/gamecontent/missle/missle_a.png","speed":100,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"decorations":[],"id":"1535737625655","name":"Enemy1","isBoss":false,"tile":"img/gamecontent/spaceship/enemy_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_b.png","speed":2,"damage":10,"maxLife":1},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"id":"1541371592350","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]},{"id":"1541371592985","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/bullet/bullet_a.png","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"tile":"img/gamecontent/missle/missle_a.png","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]}];
+		config = [{"decorations":[{"id":"fire_a","point":{"x":-24,"y":35}},{"id":"fire_a","point":{"x":-9,"y":34}}],"id":"1535737624855","name":"Player","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":5,"fireRate":600,"missileFireRate":3000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":-12,"y":-18},{"x":12,"y":-18}],"graphicId":"bullet_a","speed":400,"damage":10,"maxLife":0},"missileConfig":{"firePoints":[{"x":30,"y":-3},{"x":-30,"y":-3}],"graphicId":"missle_a","speed":100,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"decorations":[],"id":"1535737625655","name":"Enemy1","isBoss":false,"tile":"img/gamecontent/spaceship/enemy_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":4,"fireRate":0,"missileFireRate":0,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"bullet_b","speed":2,"damage":10,"maxLife":1},"missileConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"missle_a","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0}},{"id":"1541371592350","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"bullet_a","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"missle_a","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]},{"id":"1541371592985","name":"unnamed","isBoss":false,"tile":"img/gamecontent/spaceship/spaceship_a.png","destroyRange":0,"hitAreaRadius":30,"maxLife":1,"speed":10,"fireRate":1000,"missileFireRate":1000,"chanceToDodge":0,"bulletConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"bullet_a","speed":10,"damage":0,"maxLife":0},"missileConfig":{"firePoints":[{"x":0,"y":0}],"graphicId":"missle_a","speed":10,"rotationSpeed":0,"maxDamage":0,"reducedDamage":0,"areaToReducedDamage":0,"maxLife":0},"decorations":[]}];
 	}
 
 	public static function getSpaceshipConfig(id:String):SpaceshipConfig
@@ -44,14 +44,14 @@ class SpaceshipConfigs
 			chanceToDodge: 0,
 			bulletConfig: {
 				firePoints: [{ x: 0, y: 0 }],
-				tile: TileConfigs.bulletTileConfig[0].editorUrl,
+				graphicId: TileConfigs.bulletTileConfig[0].editorUrl,
 				speed: 10,
 				damage: 0,
 				maxLife: 0
 			},
 			missileConfig: {
 				firePoints: [{ x: 0, y: 0 }],
-				tile: TileConfigs.missileTileConfig[0].editorUrl,
+				graphicId: TileConfigs.missileTileConfig[0].editorUrl,
 				speed: 10,
 				rotationSpeed: 0,
 				maxDamage: 0,
@@ -79,14 +79,14 @@ class SpaceshipConfigs
 			chanceToDodge: target.chanceToDodge,
 			bulletConfig: {
 				firePoints: [],
-				tile: target.bulletConfig.tile,
+				graphicId: target.bulletConfig.graphicId,
 				speed: target.bulletConfig.speed,
 				damage: target.bulletConfig.damage,
 				maxLife: target.bulletConfig.maxLife
 			},
 			missileConfig: {
 				firePoints: [],
-				tile: target.missileConfig.tile,
+				graphicId: target.missileConfig.graphicId,
 				speed: target.missileConfig.speed,
 				rotationSpeed: target.missileConfig.rotationSpeed,
 				maxDamage: target.missileConfig.maxDamage,
@@ -142,7 +142,7 @@ enum FireMode {
 }
 
 typedef BulletConfig = {
-	var tile:String;  // WARNING different in the game
+	var graphicId:String;
 	var speed:Float;
 	var damage:Float;
 	var firePoints:Array<SimplePoint>;
@@ -153,7 +153,7 @@ typedef BulletConfig = {
 }
 
 typedef MissileConfig = {
-	var tile:String; // WARNING different in the game
+	var graphicId:String;
 	var speed:Float;
 	var maxDamage:Float;
 	var rotationSpeed:Float;

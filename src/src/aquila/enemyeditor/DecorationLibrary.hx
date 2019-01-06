@@ -32,8 +32,6 @@ class DecorationLibrary extends Sprite
 
 		container.x = width / 2 - container.width / 2;
 		container.y = height / 2 - container.height / 2;
-
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 
 	function createDecorEntry(config:DecorationConfig, addDecoration)
@@ -46,6 +44,5 @@ class DecorationLibrary extends Sprite
 		return decor;
 	}
 
-	function onEnterFrame(e:Event) for (d in decors) d.update();
 	public function reset() for (d in decors) d.reset();
 }

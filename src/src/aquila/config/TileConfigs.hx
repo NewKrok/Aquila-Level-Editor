@@ -36,28 +36,37 @@ class TileConfigs
 		bulletTileConfig = [
 			{
 				editorUrl: "img/gamecontent/bullet/bullet_a.png",
-				gameUrl: "img/gamecontent/bullet/bullet_a",
+				gameUrl: "bullet_a",
 			},
 			{
 				editorUrl: "img/gamecontent/bullet/bullet_b.png",
-				gameUrl: "img/gamecontent/bullet/bullet_b",
+				gameUrl: "bullet_b",
 			}
 		];
 
 		missileTileConfig = [
 			{
 				editorUrl: "img/gamecontent/missle/missle_a.png",
-				gameUrl: "img/gamecontent/missle/missle_a",
+				gameUrl: "missle_a",
 			},
 			{
 				editorUrl: "img/gamecontent/missle/missle_b.png",
-				gameUrl: "img/gamecontent/missle/missle_b",
+				gameUrl: "missle_b",
 			},
 			{
 				editorUrl: "img/gamecontent/missle/missle_c.png",
-				gameUrl: "img/gamecontent/missle/missle_c",
+				gameUrl: "missle_c",
 			}
 		];
+	}
+
+	public static function getEditorUrlByGameUrl(url:String):String
+	{
+		for (c in spaceShipsTileConfig) if (c.gameUrl == url) return c.editorUrl;
+		for (c in bulletTileConfig) if (c.gameUrl == url) return c.editorUrl;
+		for (c in missileTileConfig) if (c.gameUrl == url) return c.editorUrl;
+
+		return null;
 	}
 }
 

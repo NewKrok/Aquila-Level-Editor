@@ -1,5 +1,7 @@
 package aquila.enemyeditor;
 
+import aquila.config.AnimationConfig.AnimationConfigs;
+import aquila.ui.Animation;
 import com.greensock.TweenMax;
 import aquila.config.TileConfigs;
 import openfl.Assets;
@@ -22,11 +24,11 @@ class SampleBullet extends Sprite
 
 		this.onRemove = onRemove;
 
-		var preview:Bitmap = new Bitmap(Assets.getBitmapData(tile));
+		var preview:Animation = new Animation(AnimationConfigs.getConfig(tile));
 		preview.scaleX = preview.scaleY = aquila.config.TileConfigs.TILE_SCALE;
 		preview.x = -preview.width / 2;
 		preview.y = -preview.height / 2;
-		preview.rotation = angle + Math.PI / 2;
+		preview.rotation = angle - 90;
 		addChild(preview);
 
 		xSpeed = speed * Math.cos(angle);
@@ -40,7 +42,6 @@ class SampleBullet extends Sprite
 		x += xSpeed * (delta / 100) * speedMultiplier;
 		y += ySpeed * (delta / 100) * speedMultiplier;
 
-		if (x < 0 || x > 400 || y < 0 || y > 600)
-			onRemove(this);
+		if (x < 0 || x > 400 || y < 0 || y > 600) onRemove(this);
 	}
 }

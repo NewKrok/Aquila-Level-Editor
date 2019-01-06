@@ -44,7 +44,7 @@ class TileProperty extends BaseProperty
 		{
 			var preview:TilePreview;
 			tilePreview.addChild(preview = new TilePreview(
-				function(c) { value = c.editorUrl; },
+				function(c) { value = c.gameUrl; },
 				tileConfig,
 				previewSize
 			));

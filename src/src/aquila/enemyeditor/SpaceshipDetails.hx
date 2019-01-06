@@ -94,7 +94,7 @@ class SpaceshipDetails extends Sprite
 
 		propertyContainer.addChild(bulletTileProp = new TileProperty("BULLET TILE", aquila.config.TileConfigs.bulletTileConfig));
 		bulletTileProp.onValueChanged = function(v) {
-			config.bulletConfig.tile = v;
+			config.bulletConfig.graphicId = v;
 			onChange(config);
 		};
 
@@ -124,7 +124,7 @@ class SpaceshipDetails extends Sprite
 
 		propertyContainer.addChild(missileTileProp = new TileProperty("MISSILE TILE", aquila.config.TileConfigs.missileTileConfig));
 		missileTileProp.onValueChanged = function(v) {
-			config.missileConfig.tile = v;
+			config.missileConfig.graphicId = v;
 			onChange(config);
 		};
 
@@ -179,12 +179,12 @@ class SpaceshipDetails extends Sprite
 		speedProp.value = config.speed;
 		dodgeProp.value = config.chanceToDodge;
 		fireRateProp.value = config.fireRate;
-		bulletTileProp.value = config.bulletConfig.tile;
+		bulletTileProp.value = config.bulletConfig.graphicId;
 		bulletSpeedProp.value = config.bulletConfig.speed;
 		bulletDamageProp.value = config.bulletConfig.damage;
 		bulletLifeProp.value = config.bulletConfig.maxLife;
 		missileFireRateProp.value = config.missileFireRate;
-		missileTileProp.value = config.missileConfig.tile;
+		missileTileProp.value = config.missileConfig.graphicId;
 		missileSpeedProp.value = config.missileConfig.speed;
 		missileRotationSpeedProp.value = Math.round(config.missileConfig.rotationSpeed * (180 / Math.PI));
 		missileDamageProp.value = config.missileConfig.maxDamage;
